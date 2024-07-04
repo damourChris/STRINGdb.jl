@@ -1,0 +1,3 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+STRINGdb = "74a80de1-bd6a-4f9a-8ba7-e671a0fc0c09"
