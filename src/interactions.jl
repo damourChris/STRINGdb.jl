@@ -1,15 +1,16 @@
 module InteractionTerms
+using JSON3
 
 import ..STRINGdb: BASE_URL, Client
 
-export Interaction, score, scores, identifiers, names, get_interactions
+export Interaction, score, scores, species, identifiers, names, get_interactions
 
 @kwdef struct Interaction
     stringId_A::AbstractString
     stringId_B::AbstractString
     preferredName_A::AbstractString
     preferredName_B::AbstractString
-    ncbiTaxonId::Any
+    ncbiTaxonId::Int64
     score::Float64
     nscore::Float64
     fscore::Float64
@@ -21,9 +22,11 @@ export Interaction, score, scores, identifiers, names, get_interactions
 end
 
 score(x::Interaction)::Float64 = x.score
-species(x::Interaction)::AbstractString = x.ncbiTaxonID
+species(x::Interaction)::Float64 = x.ncbiTaxonId
 identifiers(x::Interaction)::@NamedTuple{proteinA::AbstractString,proteinB::AbstractString} = (proteinA=x.stringId_A,
                                                                                                proteinB=x.stringId_B)
+
+import Base.names
 names(x::Interaction)::@NamedTuple{proteinA::AbstractString,proteinB::AbstractString} = (proteinA=x.preferredName_A,
                                                                                          proteinB=x.preferredName_B)
 function scores(x::Interaction)::@NamedTuple{combined::Float64,neighborhood::Float64,
@@ -56,11 +59,11 @@ Get interaction partners for the given list of protein identifiers.
 
 """
 function get_interactions(identifiers::Vector{String};
-                          required_score::Float64=750,
+                          required_score::Float64=0.0,
                           network_type::Symbol=:functional,
                           show_query_node_labels::Bool=false,
                           add_nodes::Bool=false,
-                          species::AbstractString="9606")::Vector{Interaction}
+                          species::Int64=9606)::Vector{Interaction}
     if required_score < 0 || required_score > 1000
         throw(ArgumentError("required_score must be between 0 and 1000"))
     end
@@ -88,7 +91,7 @@ function get_interactions(identifiers::Vector{String};
                                          x["stringId_B"],
                                          x["preferredName_A"],
                                          x["preferredName_B"],
-                                         x["ncbiTaxonId"],
+                                         parse(Int32, x["ncbiTaxonId"]),
                                          x["score"],
                                          x["nscore"],
                                          x["fscore"],
