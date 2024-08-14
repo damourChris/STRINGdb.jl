@@ -1,5 +1,8 @@
 module STRINGdb
+using DataFrames
+using JSON3
 
-# Write your package code here.
+include("client.jl")
+using .Client
 
 end
