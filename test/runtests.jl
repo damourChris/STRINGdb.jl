@@ -2,5 +2,5 @@ using STRINGdb
 using Test
 
 @testset "STRINGdb.jl" begin
-    # Write your tests here.
+    include("test_interactions.jl")
 end
