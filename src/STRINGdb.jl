@@ -1,5 +1,4 @@
 module STRINGdb
-using DataFrames
 using JSON3
 
 const BASE_URL = "https://version-11-5.string-db.org/api"
