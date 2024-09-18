@@ -6,6 +6,14 @@
     "image": "mcr.microsoft.com/devcontainers/base:bullseye",
     "features": {
         "ghcr.io/julialang/devcontainer-features/julia:1": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "julialang.language-julia",
+                "tamasfe.even-better-toml"
+            ]
+        }
     }
     // "overrideFeatureInstallOrder": [
     // 	"ghcr.io/devcontainers-contrib/features/apt-get-packages:1"
