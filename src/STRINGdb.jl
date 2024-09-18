@@ -9,6 +9,6 @@ using .Client
 
 include("interactions.jl")
 using .InteractionTerms
-export Interaction, score, scores, identifiers, names, get_interactions
+export Interaction, score, scores, species, identifiers, names, get_interactions
 
 end
